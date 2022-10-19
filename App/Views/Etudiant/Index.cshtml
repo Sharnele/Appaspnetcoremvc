@@ -1,0 +1,26 @@
+﻿@model List<App.Models.Etudiant>
+
+@{
+}
+<h1> Etudiants</h1>
+<table class="table" >
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Boutton</th>
+      </tr>
+    </thead>
+    <tbody>
+        
+        @foreach (var etudiant in Model)
+        {
+            <tr>
+               <td>@etudiant.Id</td>
+               <td>@etudiant.Nom</td>
+               <td> <a href="Etudiant/View/@etudiant.Id">View </a> </td>
+               <td></td>
+            </tr>   
+        }
+    </tbody>
+</table>

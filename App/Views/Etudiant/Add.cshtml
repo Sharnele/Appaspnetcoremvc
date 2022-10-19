@@ -1,0 +1,13 @@
+﻿@model App.Models.AddEtudiantviewmodel
+@{
+}
+<h1> AJOUTER UN ETUDIANT</h1>
+<form method="post" action="Add" class="mt-5">
+    <div class="mb-3">
+        <label for="Nom" class="form-label">Nom</label>
+        <input type="text" class="form-control" asp-for="Nom">
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
