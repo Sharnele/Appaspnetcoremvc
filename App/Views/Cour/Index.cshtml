@@ -1,0 +1,26 @@
+﻿@model List<App.Models.Cour>
+
+@{
+}
+<h1> Cours</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Boutton</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var cour in Model)
+        {
+            <tr>
+                <td>@cour.Id</td>
+                <td>@cour.Nom</td>
+                <td> <a href="Cour/View/@cour.Id">View </a> </td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+    </tab
