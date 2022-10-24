@@ -12,5 +12,7 @@ namespace App.Data
         }
         public DbSet<Etudiant> etudiants { get; set; }
         public DbSet<Cour> cours { get; set; }
+        public DbSet<Participant> participants { get; set; }
+
     }
 }
