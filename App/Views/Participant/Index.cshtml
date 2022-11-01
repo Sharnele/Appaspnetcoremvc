@@ -1,0 +1,34 @@
+﻿@model List<App.Models.Participant>
+
+@{
+}
+<h1> Participants</h1>
+
+<p>
+    @Html.ActionLink("Add new ","Add")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Etudiant</th>
+            <th>Cours</th>
+            <th>Date</th>
+            <th>Boutton</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var participant in Model)
+        {
+            <tr>
+                <td>@participant.Id</td>
+                <td>@participant.etudiant.Nom</td>
+                <td>@participant.cour.Nom</td>
+                <td>@participant.datep</td>
+                <td> <a href="Participant/View/@participant.Id">View </a> </td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+    </tab

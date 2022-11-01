@@ -13,6 +13,7 @@ namespace App.Controllers
         {
             this.appcontext = appcontext;
         }
+        
         // affiche la liste des cours de la base de donnees
         [HttpGet]
         public async Task<IActionResult> Index()

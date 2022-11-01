@@ -7,22 +7,24 @@ namespace App.Controllers
 {
     public class ParticipantController : Controller
     {
-        private readonly AppContext appContext;
+        private readonly Appcontext appcontext;
+     
 
-        public CourController(AppContext appcontext)
+        public ParticipantController(Appcontext appcontext)
         {
             this.appcontext = appcontext;
         }
-        // affiche la liste des cours de la base de donnees
+
+        // affiche la liste des participant de la base de donnees
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var cours = await appcontext.cours.ToListAsync();
-            return View(cours);
+            var participants = await appcontext.participants.ToListAsync();
+            return View(participants);
 
 
         }
-        //initialise 
+        //initialise l'ajout
         [HttpGet]
 
         public IActionResult Add()
@@ -33,51 +35,58 @@ namespace App.Controllers
 
 
         }
-        // ajouter un cour dans la base de donnees
+        // ajouter un participant dans la base de donnees
         [HttpPost]
-        public async Task<IActionResult> Add(Cour addcoursrequest)
+        public async Task<IActionResult> Add(Participant addparticipantrequest)
         {
-            var cour = new Cour();
+            var participant = new Participant();
             {
-                cour.Id = Guid.NewGuid();
-                cour.Nom = addcoursrequest.Nom;
+                participant.Id = Guid.NewGuid();
+                participant.etudiant = addparticipantrequest.etudiant;
+                participant.cour = addparticipantrequest.cour;
+                participant.datep = addparticipantrequest.datep;
 
             }
 
-            await appcontext.cours.AddAsync(cour);
+            await appcontext.participants.AddAsync(participant);
             await appcontext.SaveChangesAsync();
             return RedirectToAction("Index");
 
 
 
         }
-        // recuperer l'id afin de selection  l'enregistrement a modifier
+        // recuperer l'id afin de selectionner  l'enregistrement a modifier
         [HttpGet]
         public async Task<IActionResult> View(Guid id)
         {
-            var cour = await appcontext.cours.FirstOrDefaultAsync(x => x.Id == id);
-            if (cour != null)
+            var particpant = await appcontext.participants.FirstOrDefaultAsync(x => x.Id == id);
+            if (particpant != null)
             {
-                var viewmodel = new Cour()
+                var viewmodel = new Participant()
                 {
-                    Id = cour.Id,
-                    Nom = cour.Nom
+                    Id = particpant.Id,
+                    etudiant = particpant.etudiant,
+                    cour=particpant.cour,  
+                    datep = particpant.datep   
                 };
 
                 return await Task.Run(() => View("View", viewmodel));
             }
             return RedirectToAction("Index");
         }
-        //modifier un cour
+        //modifier un participant
 
         [HttpPost]
-        public async Task<IActionResult> View(Cour model)
+        public async Task<IActionResult> View(Participant model)
         {
-            var cour = await appcontext.cours.FindAsync(model.Id);
-            if (cour != null)
+            var participant = await appcontext.participants.FindAsync(model.Id);
+            if (participant != null)
             {
-                cour.Id = model.Id;
-                cour.Nom = model.Nom;
+                participant.Id = model.Id;
+                participant.etudiant = model.etudiant;
+                participant.cour = model.cour;
+                participant.datep = model.datep;
+         
 
                 await appcontext.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -88,12 +97,12 @@ namespace App.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> Delete(Cour model)
+        public async Task<IActionResult> Delete(Participant model)
         {
-            var cour = await appcontext.cours.FindAsync(model.Id);
-            if (cour != null)
+            var particiipant = await appcontext.participants.FindAsync(model.Id);
+            if (particiipant != null)
             {
-                appcontext.cours.Remove(cour);
+                appcontext.participants.Remove(particiipant);
                 await appcontext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

@@ -1,0 +1,47 @@
+﻿
+@model App.Models.Participant
+
+@{
+}
+<h1> AJOUTER UN ETUDIANT</h1>
+<form method="post" action="Add" class="mt-5">
+   <div class="form-group"
+         @Html.LabelFor(Model=>Model.etudiant,"idetudiant", htmlAttributes: new 
+        {@class="form-control"})
+    <div class="mb-3">
+            @{
+                App.Data.Appcontext db = new App.Data.Appcontext( );
+                List<App.Models.Etudiant> listetudiant = db.etudiants.ToList();
+                <select value="etudiant" class="form-control">
+                @{
+                    <option value="" disabled hidden selected>Select Etudiiant</option>
+                    foreach(App.Models.Etudiant etudiant in  listetudiant)
+                    {
+                     <option value="@etudiant.Id">@etudiant.Nom</option>
+                    }
+                   
+                }
+                </select>
+            }
+            @*@Html.DropDownList("etudiant",null,htmlAttributes: new {@class="form-control"})*@
+      @Html.ValidationMessageFor(Model=>Model.etudiant, "", new {@class="text-danger"} )
+
+    </div>
+
+     <div class="mb-3">
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+       
+
+    </div>
+    <div class="mb-3">
+        <label for="Nom" class="form-label">Nom</label>
+        <input type="date" class="form-control" asp-for="datep" />
+    </div>
+   </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

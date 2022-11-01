@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Migrations
 {
     [DbContext(typeof(Appcontext))]
-    [Migration("20221018011011_initiale migration")]
-    partial class initialemigration
+    [Migration("20221024044839_InitialeCreate")]
+    partial class InitialeCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,34 +54,47 @@ namespace App.Migrations
                     b.ToTable("etudiants");
                 });
 
-            modelBuilder.Entity("CourEtudiant", b =>
+            modelBuilder.Entity("App.Models.Participant", b =>
                 {
-                    b.Property<Guid>("coursId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("etudiantsId")
+                    b.Property<Guid>("courId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("coursId", "etudiantsId");
+                    b.Property<DateTime>("datep")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("etudiantsId");
+                    b.Property<Guid>("etudiantId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.ToTable("CourEtudiant");
+                    b.HasKey("Id");
+
+                    b.HasIndex("courId");
+
+                    b.HasIndex("etudiantId");
+
+                    b.ToTable("participants");
                 });
 
-            modelBuilder.Entity("CourEtudiant", b =>
+            modelBuilder.Entity("App.Models.Participant", b =>
                 {
-                    b.HasOne("App.Models.Cour", null)
+                    b.HasOne("App.Models.Cour", "cour")
                         .WithMany()
-                        .HasForeignKey("coursId")
+                        .HasForeignKey("courId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("App.Models.Etudiant", null)
+                    b.HasOne("App.Models.Etudiant", "etudiant")
                         .WithMany()
-                        .HasForeignKey("etudiantsId")
+                        .HasForeignKey("etudiantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("cour");
+
+                    b.Navigation("etudiant");
                 });
 #pragma warning restore 612, 618
         }
